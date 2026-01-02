@@ -3,8 +3,16 @@
   "version": "3.0.5",
   "description": "Javascript library to display flowise chatbot on your website",
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/web.js",
+  "module": "dist/web.js",
+  "types": "dist/web.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/web.js",
+      "require": "./dist/web.umd.js",
+      "types": "./dist/web.d.ts"
+    }
+  },
   "scripts": {
     "dev": "cross-env NODE_ENV=development rollup --watch --config rollup.config.js",
     "build": "cross-env NODE_ENV=production rollup --config rollup.config.js",
