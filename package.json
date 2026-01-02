@@ -11,7 +11,8 @@
       "import": "./dist/web.js",
       "require": "./dist/web.umd.js",
       "types": "./dist/web.d.ts"
-    }
+    },
+    "./dist/*": "./dist/*"
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development rollup --watch --config rollup.config.js",
