@@ -149,13 +149,17 @@ const styles = `
     from, to { border-color: transparent }
     50% { border-color: orange }
   }
+  .animated-gradient-bg {
+    animation: gradient 15s ease infinite;
+    background-size: 400% 400%;
+  }
   .typewriter {
     overflow: hidden;
     border-right: .15em solid orange;
     white-space: nowrap;
-    margin: 0 auto;
     letter-spacing: .15em;
     animation: blink-caret .75s step-end infinite;
+    display: inline-block;
   }
   .bubble-tail-bot {
     position: relative;
@@ -218,6 +222,7 @@ export type BotProps = {
   showAgentMessages?: boolean;
   title?: string;
   subtitle?: string;
+  badgeText?: string;
   titleAvatarSrc?: string;
   // ... existing props ...
 
@@ -2424,7 +2429,7 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
       ) : (
         <div
           ref={botContainer}
-          class={'relative flex w-full h-full text-base overflow-hidden bg-cover bg-center flex-col items-center chatbot-container ' + props.class}
+          class={'relative flex w-full h-full text-base overflow-hidden bg-cover bg-center flex-col items-center chatbot-container animated-gradient-bg ' + props.class}
           style={{ background: props.backgroundColor || defaultBackgroundColor }}
           onDragEnter={handleDrag}
         >
@@ -2475,8 +2480,15 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
               </Show>
               <Show when={props.title}>
                 <div class="flex flex-col">
-                  <span class="px-3 whitespace-pre-wrap font-semibold max-w-full">{props.title}</span>
-                  {props.subtitle && <span class="px-3 text-xs opacity-90">{props.subtitle}</span>}
+                  <div class="flex flex-row items-center gap-2">
+                    <span class="px-3 whitespace-pre-wrap font-semibold max-w-full">{props.title}</span>
+                    {props.badgeText && (
+                      <span class="px-2 py-0.5 text-[10px] font-bold text-white rounded-full bg-red-500 animate-pulse">
+                        {props.badgeText}
+                      </span>
+                    )}
+                  </div>
+                  {props.subtitle && <span class="px-3 text-xs opacity-90 typewriter">{props.subtitle}</span>}
                 </div>
               </Show>
               <div style={{ flex: 1 }} />

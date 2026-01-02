@@ -100,6 +100,7 @@ export type BotProps = {
     showAgentMessages?: boolean;
     title?: string;
     subtitle?: string;
+    badgeText?: string;
     titleAvatarSrc?: string;
     titleTextColor?: string;
     titleBackgroundColor?: string;
