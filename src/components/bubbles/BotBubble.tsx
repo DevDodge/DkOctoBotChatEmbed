@@ -323,8 +323,8 @@ export const BotBubble = (props: Props) => {
                 const isFileStorage = typeof item.data === 'string' && item.data.startsWith('FILE-STORAGE::');
                 return isFileStorage
                   ? `${props.apiHost}/api/v1/get-upload-file?chatflowId=${props.chatflowid}&chatId=${props.chatId}&fileName=${(
-                      item.data as string
-                    ).replace('FILE-STORAGE::', '')}`
+                    item.data as string
+                  ).replace('FILE-STORAGE::', '')}`
                   : (item.data as string);
               })()}
             />
@@ -456,8 +456,10 @@ export const BotBubble = (props: Props) => {
               style={{
                 'background-color': props.backgroundColor ?? defaultBackgroundColor,
                 color: props.textColor ?? defaultTextColor,
-                'border-radius': '6px',
+                'border-radius': '6px 6px 6px 0px',
                 'font-size': props.fontSize ? `${props.fontSize}px` : `${defaultFontSize}px`,
+                'text-align': /[\u0600-\u06FF]/.test(props.message.message) ? 'right' : 'left',
+                direction: /[\u0600-\u06FF]/.test(props.message.message) ? 'rtl' : 'ltr',
               }}
             />
           )}

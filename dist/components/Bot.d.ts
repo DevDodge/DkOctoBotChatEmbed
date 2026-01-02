@@ -99,6 +99,7 @@ export type BotProps = {
     showTitle?: boolean;
     showAgentMessages?: boolean;
     title?: string;
+    subtitle?: string;
     titleAvatarSrc?: string;
     titleTextColor?: string;
     titleBackgroundColor?: string;

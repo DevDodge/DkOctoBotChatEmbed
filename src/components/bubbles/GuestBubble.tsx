@@ -92,7 +92,9 @@ export const GuestBubble = (props: Props) => {
         style={{
           'background-color': props.backgroundColor ?? defaultBackgroundColor,
           color: props.textColor ?? defaultTextColor,
-          'border-radius': '6px',
+          'border-radius': '6px 6px 0px 6px',
+          'text-align': /[\u0600-\u06FF]/.test(props.message.message) ? 'right' : 'left',
+          direction: /[\u0600-\u06FF]/.test(props.message.message) ? 'rtl' : 'ltr',
         }}
       >
         {props.message.fileUploads && props.message.fileUploads.length > 0 && (
@@ -107,7 +109,7 @@ export const GuestBubble = (props: Props) => {
         {props.message.message && (
           <span
             ref={setUserMessageRef}
-            class="mr-2 whitespace-pre-wrap"
+            class="mr-2 whitespace-pre-wrap break-words"
             style={{ 'font-size': props.fontSize ? `${props.fontSize}px` : `${defaultFontSize}px` }}
           />
         )}
