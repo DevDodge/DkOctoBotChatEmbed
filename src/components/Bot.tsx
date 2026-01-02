@@ -138,6 +138,66 @@ type IUploads = {
 type observerConfigType = (accessor: string | boolean | object | MessageType[]) => void;
 export type observersConfigType = Record<'observeUserInput' | 'observeLoading' | 'observeMessages', observerConfigType>;
 
+// Add keyframes for background animation
+const styles = `
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: orange }
+  }
+  .typewriter {
+    overflow: hidden;
+    border-right: .15em solid orange;
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .15em;
+    animation: blink-caret .75s step-end infinite;
+  }
+  .bubble-tail-bot {
+    position: relative;
+  }
+  .bubble-tail-bot::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: -10px;
+    width: 20px;
+    height: 20px;
+    background: inherit;
+    clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+    transform: rotate(90deg);
+    z-index: -1;
+  }
+  .bubble-tail-user {
+    position: relative;
+  }
+  .bubble-tail-user::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    background: inherit;
+    clip-path: polygon(0 0, 0% 100%, 100% 100%); 
+    z-index: -1;
+  }
+  /* Shadow for 3D effect */
+  .bubble-shadow {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+`;
+
+if (typeof document !== 'undefined') {
+  const styleSheet = document.createElement("style");
+  styleSheet.innerText = styles;
+  document.head.appendChild(styleSheet);
+}
+
 export type BotProps = {
   chatflowid: string;
   apiHost?: string;
@@ -159,6 +219,10 @@ export type BotProps = {
   title?: string;
   subtitle?: string;
   titleAvatarSrc?: string;
+  // ... existing props ...
+
+
+
   titleTextColor?: string;
   titleBackgroundColor?: string;
   formBackgroundColor?: string;

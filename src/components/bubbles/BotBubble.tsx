@@ -451,12 +451,13 @@ export const BotBubble = (props: Props) => {
           {props.message.message && (
             <span
               ref={setBotMessageRef}
-              class="px-4 py-2 ml-2 max-w-full chatbot-host-bubble prose"
+              class="px-4 py-2 ml-2 max-w-full chatbot-host-bubble prose bubble-tail-bot"
               data-testid="host-bubble"
               style={{
                 background: props.backgroundColor ?? defaultBackgroundColor,
                 color: props.textColor ?? defaultTextColor,
-                'border-radius': '6px 6px 6px 0px',
+                'border-radius': '6px',
+                'box-shadow': '0 2px 5px rgba(0,0,0,0.1)',
                 'font-size': props.fontSize ? `${props.fontSize}px` : `${defaultFontSize}px`,
                 'text-align': /[\u0600-\u06FF]/.test(props.message.message) ? 'right' : 'left',
                 direction: /[\u0600-\u06FF]/.test(props.message.message) ? 'rtl' : 'ltr',
