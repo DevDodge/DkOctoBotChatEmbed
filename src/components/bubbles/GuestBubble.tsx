@@ -90,7 +90,7 @@ export const GuestBubble = (props: Props) => {
         class="max-w-full flex flex-col justify-center items-start chatbot-guest-bubble px-4 py-2 gap-2 mr-2"
         data-testid="guest-bubble"
         style={{
-          'background-color': props.backgroundColor ?? defaultBackgroundColor,
+          background: props.backgroundColor ?? defaultBackgroundColor,
           color: props.textColor ?? defaultTextColor,
           'border-radius': '6px 6px 0px 6px',
           'text-align': /[\u0600-\u06FF]/.test(props.message.message) ? 'right' : 'left',
