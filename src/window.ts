@@ -15,9 +15,9 @@ let elementUsed: Element | undefined;
 
 export const initFull = (props: BotProps & { id?: string }) => {
   destroy();
-  let fullElement = props.id ? document.getElementById(props.id) : document.querySelector('flowise-fullchatbot');
+  let fullElement = props.id ? document.getElementById(props.id) : document.querySelector('octobot-fullchatbot');
   if (!fullElement) {
-    fullElement = document.createElement('flowise-fullchatbot');
+    fullElement = document.createElement('octobot-fullchatbot');
     Object.assign(fullElement, props);
     document.body.appendChild(fullElement);
   } else {
@@ -28,7 +28,7 @@ export const initFull = (props: BotProps & { id?: string }) => {
 
 export const init = (props: BotProps) => {
   destroy();
-  const element = document.createElement('flowise-chatbot');
+  const element = document.createElement('octobot-chatbot');
   Object.assign(element, props);
   document.body.appendChild(element);
   elementUsed = element;
@@ -46,8 +46,8 @@ type Chatbot = {
 
 declare const window:
   | {
-      Chatbot: Chatbot | undefined;
-    }
+    Chatbot: Chatbot | undefined;
+  }
   | undefined;
 
 export const parseChatbot = () => ({
