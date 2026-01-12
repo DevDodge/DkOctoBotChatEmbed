@@ -26,6 +26,7 @@ import {
   DateTimeToggleTheme,
 } from '@/features/bubble/types';
 import { Badge } from './Badge';
+import { AdBanner } from './AdBanner';
 import { Popup, DisclaimerPopup } from '@/features/popup';
 import { Avatar } from '@/components/avatars/Avatar';
 import { DeleteButton, SendButton } from '@/components/buttons/SendButton';
@@ -149,10 +150,54 @@ const styles = `
     from, to { border-color: transparent }
     50% { border-color: orange }
   }
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Caveat:wght@400;700&display=swap');
+  
+  :host {
+      font-family: 'Outfit', sans-serif;
+  }
+  
+  .octobot-container {
+      font-family: 'Outfit', sans-serif;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+  }
+
   .animated-gradient-bg {
     animation: gradient 15s ease infinite;
     background-size: 400% 400%;
   }
+
+  /* Glassmorphism for Header */
+  .octobot-header {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 16px;
+      display: flex;
+      flex-direction: column; /* Stack Title and AdBanner */
+      align-items: center;
+      z-index: 10;
+  }
+
+  /* Scrollbar Styling */
+  ::-webkit-scrollbar {
+      width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+      background: rgba(0,0,0,0.1);
+  }
+  ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.3);
+  }
+
   .typewriter {
     overflow: hidden;
     border-right: .15em solid orange;
@@ -244,6 +289,12 @@ export type BotProps = {
   dateTimeToggle?: DateTimeToggleTheme;
   renderHTML?: boolean;
   closeBot?: () => void;
+  adConfig?: {
+    adText?: string | string[];
+    adImage?: string;
+    adLink?: string;
+    showBadge?: boolean;
+  };
 };
 
 export type LeadsConfig = {
@@ -2463,44 +2514,62 @@ export const Bot = (botProps: BotProps & { class?: string }) => {
           )}
 
           {props.showTitle ? (
-            <div
-              class="flex flex-row items-center w-full h-[50px] absolute top-0 left-0 z-10"
-              style={{
-                background: props.titleBackgroundColor || props.bubbleBackgroundColor || defaultTitleBackgroundColor,
-                color: props.titleTextColor || props.bubbleTextColor || defaultBackgroundColor,
-                'border-top-left-radius': props.isFullPage ? '0px' : '6px',
-                'border-top-right-radius': props.isFullPage ? '0px' : '6px',
-              }}
-            >
-              <Show when={props.titleAvatarSrc}>
-                <>
-                  <div style={{ width: '15px' }} />
-                  <Avatar initialAvatarSrc={props.titleAvatarSrc} />
-                </>
-              </Show>
-              <Show when={props.title}>
-                <div class="flex flex-col">
-                  <div class="flex flex-row items-center gap-2">
-                    <span class="px-3 whitespace-pre-wrap font-semibold max-w-full">{props.title}</span>
-                    {props.badgeText && (
-                      <span class="px-2 py-0.5 text-[10px] font-bold text-white rounded-full bg-red-500 animate-pulse">
-                        {props.badgeText}
-                      </span>
-                    )}
+            <div class="octobot-header">
+              <div style={{ display: 'flex', 'align-items': 'center', 'justify-content': 'space-between', width: '100%' }}>
+                <div style={{ display: 'flex', 'align-items': 'center' }}>
+                  <Show when={props.titleAvatarSrc}>
+                    <div style={{
+                      'width': '40px',
+                      'height': '40px',
+                      'border-radius': '50%',
+                      'margin-right': '12px',
+                      'background-image': `url(${props.titleAvatarSrc})`,
+                      'background-size': 'cover',
+                      'box-shadow': '0 2px 5px rgba(0,0,0,0.2)'
+                    }} />
+                  </Show>
+                  <div>
+                    <span style={{
+                      'font-weight': '600',
+                      'font-size': '18px',
+                      'text-shadow': '0 2px 4px rgba(0,0,0,0.3)',
+                      'color': props.titleTextColor || '#ffffff'
+                    }}>{props.title}</span>
+
+                    <Show when={props.badgeText}>
+                      <span style={{
+                        'margin-left': '8px',
+                        'font-size': '10px',
+                        'background': '#E91E63',
+                        'padding': '2px 6px',
+                        'border-radius': '4px',
+                        'color': 'white',
+                        'font-weight': 'bold',
+                        'vertical-align': 'middle',
+                        'box-shadow': '0 0 10px rgba(233, 30, 99, 0.4)'
+                      }}>{props.badgeText}</span>
+                    </Show>
                   </div>
-                  {props.subtitle && <span class="px-3 text-xs opacity-90 typewriter">{props.subtitle}</span>}
+                </div>
+                <DeleteButton
+                  sendButtonColor={props.bubbleTextColor || '#ffffff'}
+                  type="button"
+                  isDisabled={messages().length === 1}
+                  class="my-2 ml-2"
+                  on:click={clearChat}
+                >
+                  <span style={{ 'font-family': 'Outfit, sans-serif' }}>Clear</span>
+                </DeleteButton>
+              </div>
+
+              <Show when={props.subtitle}>
+                <div style={{ 'width': '100%', 'text-align': 'left', 'padding-left': '52px', 'opacity': 0.8, 'font-size': '12px' }}>
+                  <span class="typewriter">{props.subtitle}</span>
                 </div>
               </Show>
-              <div style={{ flex: 1 }} />
-              <DeleteButton
-                sendButtonColor={props.bubbleTextColor}
-                type="button"
-                isDisabled={messages().length === 1}
-                class="my-2 ml-2"
-                on:click={clearChat}
-              >
-                <span style={{ 'font-family': 'Poppins, sans-serif' }}>Clear</span>
-              </DeleteButton>
+
+              {/* NEW: AdBanner Component */}
+              <AdBanner adConfig={props.adConfig} />
             </div>
           ) : null}
           <div class="flex flex-col w-full h-full justify-start z-0">

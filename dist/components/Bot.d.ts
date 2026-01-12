@@ -120,6 +120,12 @@ export type BotProps = {
     dateTimeToggle?: DateTimeToggleTheme;
     renderHTML?: boolean;
     closeBot?: () => void;
+    adConfig?: {
+        adText?: string | string[];
+        adImage?: string;
+        adLink?: string;
+        showBadge?: boolean;
+    };
 };
 export type LeadsConfig = {
     status: boolean;
