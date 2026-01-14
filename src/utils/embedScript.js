@@ -7,7 +7,7 @@ export function generateEmbedScript(serverUrl) {
   })
 </script>`;
 
-  const scriptFull = `<flowise-fullchatbot></flowise-fullchatbot>
+  const scriptFull = `<octobot-fullchatbot></octobot-fullchatbot>
 <script type="module">
   import Chatbot from '${serverUrl}/web.js'
   Chatbot.initFull({

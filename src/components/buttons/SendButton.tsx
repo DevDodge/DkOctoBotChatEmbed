@@ -28,8 +28,8 @@ export const SendButton = (props: SendButtonProps) => {
   );
 };
 export const DeleteButton = (props: SendButtonProps) => {
-  // Check if <flowise-fullchatbot> is present in the DOM
-  const isFullChatbot = document.querySelector('flowise-fullchatbot') !== null;
+  // Check if <octobot-fullchatbot> is present in the DOM
+  const isFullChatbot = document.querySelector('octobot-fullchatbot') !== null;
   const paddingClass = isFullChatbot ? 'px-4' : 'px-12';
 
   return (
